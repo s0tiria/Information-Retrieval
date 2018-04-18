@@ -165,7 +165,7 @@ if __name__ == "__main__":
         
         # pour chaque document
         # on ne prend en compte que les documents à indexer, autrement dit, ceux qui n'ont pas un '!' avant l'extension
-        for filename in glob.glob(os.path.join(pathdir, '_txt2\*[0-9].txt')):
+        for filename in glob.glob(os.path.join(pathdir, '_txt\*[0-9].txt')):
             docNo += 1
 
             # ouverture du fichier
