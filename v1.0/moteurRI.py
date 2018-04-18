@@ -138,8 +138,8 @@ if __name__ == "__main__":
             content = normalizeFile(f)
             contentTokenized = removeStopwords(content)
             contentLemmatized = LemmatizeWords(contentTokenized)
-            #print(searchedWord)
-            #print(contentLemmatized)
+            print(searchedWord)
+            print(contentLemmatized)
             if searchedWord in contentLemmatized:
                 # # calcul de la fréquence locale
                 freqLocale = freqInDoc(searchedWord, contentLemmatized)
