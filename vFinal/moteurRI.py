@@ -28,7 +28,7 @@ import nltk
 def openFile(f):
     '''
     Lecture d'un fichier
-    :param name: Le nom du fichier
+    :param f: Le nom du fichier
     :return: Un identifiant vers le fichier ouvert, que l'on peut ensuite utiliser pour lire et écrire dans le fichier
     :rtype: TextIOWrapper
     '''
@@ -38,7 +38,7 @@ def openFile(f):
 def extractTitle(f):
     '''
     Lecture de la première ligne d'un fichier
-    :param name: Le nom d'un fichier déjà ouvert avec la fonction openFile
+    :param f: Le nom d'un fichier déjà ouvert avec la fonction openFile
     :return: Le titre du document se trouvant dans la première ligne
     :rtype: String
     '''
@@ -49,7 +49,7 @@ def extractTitle(f):
 def normalizeFile(f):
     '''
     Normalisation de base d'un fichier
-    :param name: Le nom du fichier
+    :param f: Le nom du fichier
     :return: Une variable conteant le contenu du fichier en une string
     :rtype: String
     '''
@@ -60,7 +60,7 @@ def normalizeFile(f):
 def tokenizeText(text, encoding='utf8'):
     '''
     Normalisation et tokenisation du texte
-    :param name: Le contenu du fichier en une variable String
+    :param text: Le contenu du fichier en une variable String
     :return: Une liste des tokens du fichier
     :rtype: List
     '''
@@ -70,10 +70,38 @@ def tokenizeText(text, encoding='utf8'):
     tokens = nltk.word_tokenize(text)
     return tokens
 
+def normalizeFile73(f):
+    '''
+    Normalisation d'un fichier illisible
+    :param f: Le chemin du fichier à traiter
+    :return: Le contenu normalisé du fichier en une variable String
+    :rtype: String
+    '''
+    file = openFile(f)
+    title = extractTitle(file)
+    text = normalizeFile(file)
+    listTokens = tokenizeText(text)
+
+    newTokens = list()
+    for token in listTokens:
+        if len(token) > 1:
+            newToken = token[:-1]
+            if len(newToken) == 1:
+                newToken = newToken.replace('i', 'il')
+            newToken = newToken.replace('queu', 'que')
+            newToken = newToken.replace('celuio-ci', 'celui-ci')
+            newToken = newToken.replace('quh', 'qu')
+            newToken = newToken.replace('Sainteu-Lazare', 'Saint-Lazare')
+            newToken = newToken.replace('pardessusssssssssssssssssssss', 'pardessus')
+            newTokens.append(newToken)
+        else:
+            newTokens.append(token)
+    return '73. ' + title + '\n' + ' '.join(newTokens)
+
 def removeStopwords(text, encoding='utf8'):
     '''
     Suppression des mots vides (stopwords)
-    :param name: Le contenu du fichier en une variable String
+    :param text: Le contenu du fichier en une variable String
     :return: Une liste des tokens du fichier sans les mots vides
     :rtype: List
     '''
@@ -89,7 +117,7 @@ def removeStopwords(text, encoding='utf8'):
 
 def LemmatizeWords(listWords):
     '''Lemmatisation
-    :param name: Une liste des tokens
+    :param listWords: Une liste des tokens
     :return: Une liste des tokens lemmatisés
     :rtype: List
     '''
@@ -104,8 +132,8 @@ def LemmatizeWords(listWords):
 def freqInDoc(term, listWords):
     '''
     Calcul de la fréquence locale dans le texte tokenisé et lemmatisé
-    :param name: Le terme, une string
-    :param name: Une liste de termes
+    :param term: Le terme, une string
+    :param listWords: Une liste de termes
     :return: La fréquence d'un terme dans une liste
     :rtype: int
     '''
@@ -142,9 +170,14 @@ def word2index():
 
 # main
 if __name__ == "__main__":
-    
+
+    # traitement d'un fichier illisible
+    file73 = normalizeFile73('.\ExercicesDeStyle\_txt\exercice73!.txt')
+    with open('.\ExercicesDeStyle\_txt\exercice73.txt', 'w', encoding='utf-8') as file:
+        file.write(file73)
+
     # chemin vers le dossier contenant les fichiers à indexer
-    pathdir = "F:\M2 TAL\M2 S2\Recherche d'information\TPs\ExercicesDeStyle"
+    pathdir = ".\ExercicesDeStyle"
 
     try:
         os.path.exists(pathdir)
@@ -155,14 +188,16 @@ if __name__ == "__main__":
         docNo = 0
         freqGlobale = 0
         allFreqLoc = list()
+        allTitleLoc = list()
         indexInverse = dict()
+        indexTitle = dict()
 
         print("Traitement du dossier :", pathdir)
         print("Votre recherche :")
 
         # on sauvegarde la requête de l'utilisateur dans une liste search
         search = word2index()
-
+        
         # pour chaque document
         # on ne prend en compte que les documents à indexer, autrement dit, ceux qui n'ont pas un '!' avant l'extension
         for filename in glob.glob(os.path.join(pathdir, '_txt\*[0-9].txt')):
@@ -180,6 +215,11 @@ if __name__ == "__main__":
             # extraction du titre
             docTitle = extractTitle(f)
 
+            # création d'une table de correspondance entre le titre, l'url et l'identifiant
+            allTitle = dict()
+            if docNo not in allTitle.keys():
+                allTitle.setdefault(docNo, (dictname, docTitle))
+
             # prétraitement du texte extrait à l'aide des fonctions normalizeFile, removeStopwords et LemmatizeWords
             content = normalizeFile(f)
             contentTokenized = removeStopwords(content)
@@ -196,20 +236,28 @@ if __name__ == "__main__":
 
                     # association de cette fréquence avec l'id du doc
                     wordFreqLoc = dict()
-                    wordFreqLoc[word] = {docNo : freqLocale}
+                    wordFreqTitle = dict()
+                    # pour l'index inversé
+                    wordFreqLoc[word] = {docNo: freqLocale}
+                    # pour l'affichage des documents trouvés
+                    wordFreqTitle[word] = {allTitle[docNo] : freqLocale}
 
                     # création d'une liste contenant tous les docs ayant le mot recherché avec sa fréquence
                     allFreqLoc.append(wordFreqLoc)
+                    allTitleLoc.append(wordFreqTitle)
 
                     # calcul de la fréquence globale
                     freqGlobale = freqGlobale + freqLocale
                 
                     # création de l'index inversé
                     indexInverse = {freqGlobale : allFreqLoc}
+                    indexTitle = {freqGlobale : allTitleLoc}
 
         # si l'index inversé a été créé, autrement dit, si le(s) mot(s) recherché(s) existe(nt) dans le corpus
         if len(indexInverse) > 0:
-            print(indexInverse)
+            print("\nSauvegarde de l'index inversé")
+            with open("indexInverse.txt", 'w') as index:
+                index.write(str(indexInverse))
             # pour la requête "chapeau +pardessus -cou" :
             # {7: [{'chapeau': {1: 1}}, {'pardessus': {1: 1}}, {'chapeau': {2: 1}}, {'chapeau': {3: 1}}, {'pardessus': {3: 1}}, {'chapeau': {4: 1}}, {'pardessus': {4: 1}}]}
             # où :
@@ -218,5 +266,20 @@ if __name__ == "__main__":
         # sinon
         else:
             print("Le mot(s) recherché(s) n'existe(nt) pas dans le corpus")
-        print("Nombre total de fichiers traités:", docNo)
-    print("Done")
+        print("\nNombre total de fichiers traités :", docNo)
+        print("Nombre total d'occurrences trouvées :", freqGlobale)
+
+        # affichage des documents trouvés
+        print("\nDocuments trouvés : ")
+        for items in allTitleLoc:
+            for value in items:
+                query = str(value)
+                for val in items.values():
+                    for doc in val.keys():
+                        url = str(doc[0])
+                        title = str(doc[1])
+                    for freq in val.values():
+                        frequency = str(freq)
+            print(title + " - " + url + " : " + frequency + " occurrence(s) de " + query )
+
+    print("\nDone")
