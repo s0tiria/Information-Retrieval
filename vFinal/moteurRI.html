@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module moteurRI</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>moteurRI</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:f%3A%5Cm2%20tal%5Cm2%20s2%5Crecherche%20d%27information%5Cprojet_ri%5Cmoteurri.py">f:\m2 tal\m2 s2\recherche d'information\projet_ri\moteurri.py</a></font></td></tr></table>
+    <p><tt>#!/usr/bin/env&nbsp;python3<br>
+#&nbsp;-*-&nbsp;coding:&nbsp;utf-8&nbsp;-*-<br>
+###############################<br>
+###########SYNOPSIS############<br>
+###############################<br>
+#<br>
+#&nbsp;Auteurs&nbsp;:&nbsp;Sotiria&nbsp;BAMPATZANI<br>
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Morgane&nbsp;DEHARENG<br>
+#<br>
+#&nbsp;Date&nbsp;:&nbsp;18/04/18<br>
+#<br>
+#&nbsp;But&nbsp;:&nbsp;réalisation&nbsp;d'un&nbsp;petit&nbsp;moteur&nbsp;de&nbsp;recherche&nbsp;pour&nbsp;effectuer&nbsp;des&nbsp;requêtes&nbsp;booléennes&nbsp;sur&nbsp;un&nbsp;corpus&nbsp;donné<br>
+#<br>
+#&nbsp;Usage&nbsp;:&nbsp;python3&nbsp;moteurRI.py<br>
+#<br>
+#&nbsp;Documentation&nbsp;:&nbsp;générée&nbsp;à&nbsp;l'aide&nbsp;de&nbsp;la&nbsp;commande&nbsp;'pydoc&nbsp;-w&nbsp;.\moteurRI.py'<br>
+###############################</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="fr_core_news_sm.html">fr_core_news_sm</a><br>
+<a href="glob.html">glob</a><br>
+</td><td width="25%" valign=top><a href="nltk.html">nltk</a><br>
+<a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+<a href="spacy.html">spacy</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-LemmatizeWords"><strong>LemmatizeWords</strong></a>(listWords)</dt><dd><tt>Lemmatisation<br>
+:param&nbsp;listWords:&nbsp;Une&nbsp;liste&nbsp;des&nbsp;tokens<br>
+:return:&nbsp;Une&nbsp;liste&nbsp;des&nbsp;tokens&nbsp;lemmatisés<br>
+:rtype:&nbsp;List</tt></dd></dl>
+ <dl><dt><a name="-extractTitle"><strong>extractTitle</strong></a>(f)</dt><dd><tt>Lecture&nbsp;de&nbsp;la&nbsp;première&nbsp;ligne&nbsp;d'un&nbsp;fichier<br>
+:param&nbsp;f:&nbsp;Le&nbsp;nom&nbsp;d'un&nbsp;fichier&nbsp;déjà&nbsp;ouvert&nbsp;avec&nbsp;la&nbsp;fonction&nbsp;openFile<br>
+:return:&nbsp;Le&nbsp;titre&nbsp;du&nbsp;document&nbsp;se&nbsp;trouvant&nbsp;dans&nbsp;la&nbsp;première&nbsp;ligne<br>
+:rtype:&nbsp;String</tt></dd></dl>
+ <dl><dt><a name="-freqInDoc"><strong>freqInDoc</strong></a>(term, listWords)</dt><dd><tt>Calcul&nbsp;de&nbsp;la&nbsp;fréquence&nbsp;locale&nbsp;dans&nbsp;le&nbsp;texte&nbsp;tokenisé&nbsp;et&nbsp;lemmatisé<br>
+:param&nbsp;term:&nbsp;Le&nbsp;terme,&nbsp;une&nbsp;string<br>
+:param&nbsp;listWords:&nbsp;Une&nbsp;liste&nbsp;de&nbsp;termes<br>
+:return:&nbsp;La&nbsp;fréquence&nbsp;d'un&nbsp;terme&nbsp;dans&nbsp;une&nbsp;liste<br>
+:rtype:&nbsp;int</tt></dd></dl>
+ <dl><dt><a name="-normalizeFile"><strong>normalizeFile</strong></a>(f)</dt><dd><tt>Normalisation&nbsp;de&nbsp;base&nbsp;d'un&nbsp;fichier<br>
+:param&nbsp;f:&nbsp;Le&nbsp;nom&nbsp;du&nbsp;fichier<br>
+:return:&nbsp;Une&nbsp;variable&nbsp;conteant&nbsp;le&nbsp;contenu&nbsp;du&nbsp;fichier&nbsp;en&nbsp;une&nbsp;string<br>
+:rtype:&nbsp;String</tt></dd></dl>
+ <dl><dt><a name="-normalizeFile73"><strong>normalizeFile73</strong></a>(f)</dt><dd><tt>Normalisation&nbsp;d'un&nbsp;fichier&nbsp;illisible<br>
+:param&nbsp;f:&nbsp;Le&nbsp;chemin&nbsp;du&nbsp;fichier&nbsp;à&nbsp;traiter<br>
+:return:&nbsp;Le&nbsp;contenu&nbsp;normalisé&nbsp;du&nbsp;fichier&nbsp;en&nbsp;une&nbsp;variable&nbsp;String<br>
+:rtype:&nbsp;String</tt></dd></dl>
+ <dl><dt><a name="-openFile"><strong>openFile</strong></a>(f)</dt><dd><tt>Lecture&nbsp;d'un&nbsp;fichier<br>
+:param&nbsp;f:&nbsp;Le&nbsp;nom&nbsp;du&nbsp;fichier<br>
+:return:&nbsp;Un&nbsp;identifiant&nbsp;vers&nbsp;le&nbsp;fichier&nbsp;ouvert,&nbsp;que&nbsp;l'on&nbsp;peut&nbsp;ensuite&nbsp;utiliser&nbsp;pour&nbsp;lire&nbsp;et&nbsp;écrire&nbsp;dans&nbsp;le&nbsp;fichier<br>
+:rtype:&nbsp;TextIOWrapper</tt></dd></dl>
+ <dl><dt><a name="-removeStopwords"><strong>removeStopwords</strong></a>(text, encoding='utf8')</dt><dd><tt>Suppression&nbsp;des&nbsp;mots&nbsp;vides&nbsp;(stopwords)<br>
+:param&nbsp;text:&nbsp;Le&nbsp;contenu&nbsp;du&nbsp;fichier&nbsp;en&nbsp;une&nbsp;variable&nbsp;String<br>
+:return:&nbsp;Une&nbsp;liste&nbsp;des&nbsp;tokens&nbsp;du&nbsp;fichier&nbsp;sans&nbsp;les&nbsp;mots&nbsp;vides<br>
+:rtype:&nbsp;List</tt></dd></dl>
+ <dl><dt><a name="-tokenizeText"><strong>tokenizeText</strong></a>(text, encoding='utf8')</dt><dd><tt>Normalisation&nbsp;et&nbsp;tokenisation&nbsp;du&nbsp;texte<br>
+:param&nbsp;text:&nbsp;Le&nbsp;contenu&nbsp;du&nbsp;fichier&nbsp;en&nbsp;une&nbsp;variable&nbsp;String<br>
+:return:&nbsp;Une&nbsp;liste&nbsp;des&nbsp;tokens&nbsp;du&nbsp;fichier<br>
+:rtype:&nbsp;List</tt></dd></dl>
+ <dl><dt><a name="-word2index"><strong>word2index</strong></a>()</dt><dd><tt>Récupération&nbsp;de&nbsp;la&nbsp;requête&nbsp;entrée&nbsp;par&nbsp;l'utilisateur&nbsp;sur&nbsp;la&nbsp;ligne&nbsp;de&nbsp;commande<br>
+:return:&nbsp;Une&nbsp;liste&nbsp;contenant&nbsp;les&nbsp;mots&nbsp;de&nbsp;la&nbsp;requête&nbsp;à&nbsp;traiter<br>
+:rtype:&nbsp;list</tt></dd></dl>
+</td></tr></table>
+</body></html>

@@ -1,7 +1,0 @@
-Il reste à faire :
-
-1. Indexer de façon incrémentale
-2. Afficher au terminal les documents trouvés :
-	- leur titre et leur url (nom de fichier)
-	- classés selon le nombre d’occurrences des mots-clés
-3. Les documents illisibles
